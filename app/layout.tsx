@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "PermitPilot | Simplify Building Permits",
+  title: "Permivo | Simplify Building Permits",
   description:
     "AI-powered permitting assistance for residential contractors."
 };

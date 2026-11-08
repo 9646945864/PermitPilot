@@ -30,7 +30,7 @@ export default function Home() {
     <main className="min-h-screen">
       <nav className="flex items-center justify-between border-b bg-white px-8 py-5">
         <Link href="/" className="text-2xl font-bold text-blue-700">
-          PermitPilot
+          Permivo
         </Link>
 
         <span className="text-sm text-gray-500">

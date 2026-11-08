@@ -1,6 +1,6 @@
 
 {
-  "name": "permitpilot",
+  "name": "permivo",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -19,6 +19,7 @@
     "@types/node": "^22.10.2",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
+    "autoprefixer": "^10.4.20",
     "eslint": "^9.17.0",
     "eslint-config-next": "15.0.5",
     "postcss": "^8.4.49",

@@ -21,7 +21,8 @@ const rules = [
 ];
 
 function Mark() {
-  return <span className="mark" aria-hidden="true"><span /></span>;
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img className="brand-logo" src="/logo/permivo-logo-a.svg" alt="" aria-hidden="true" />;
 }
 
 function SceneArt({ index, tilt }: { index: number; tilt: { x: number; y: number } }) {
@@ -48,6 +49,7 @@ export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
   const [pageReady, setPageReady] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
+  const storyRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const savedTheme = window.localStorage.getItem("permivo-theme");
@@ -63,6 +65,31 @@ export default function Home() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  useEffect(() => {
+    const section = storyRef.current;
+    if (!section) return;
+    let frame = 0;
+    const updateSceneFromScroll = () => {
+      frame = 0;
+      const rect = section.getBoundingClientRect();
+      const scrollable = Math.max(section.offsetHeight - window.innerHeight, 1);
+      const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
+      const nextScene = Math.min(scenes.length - 1, Math.floor(progress * scenes.length));
+      setScene((value) => value === nextScene ? value : nextScene);
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateSceneFromScroll);
+    };
+    updateSceneFromScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   function toggleTheme() {
@@ -84,7 +111,7 @@ export default function Home() {
   return <main className={`page-shell ${pageReady ? "is-ready" : ""}`}>
     <header className="site-header">
       <Link href="/" className="brand" aria-label="Permivo home"><Mark /><span>permivo</span></Link>
-      <nav><a href="#tools">Tools</a><a href="#status">Status</a><button type="button" className="theme-toggle" onClick={toggleTheme} aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"} aria-pressed={darkMode}><span className="theme-icon">{darkMode ? "☼" : "☾"}</span><span className="theme-label">{darkMode ? "Light" : "Dark"}</span></button><Link href="/planner" className="header-cta">Try the planner <span>↗</span></Link></nav>
+      <nav><a href="#tools">Tools</a><a href="#status">Status</a><Link href="/planner" className="nav-tool-link">Planner</Link><Link href="/tracker" className="nav-tool-link">Tracker</Link><button type="button" className="theme-toggle" onClick={toggleTheme} aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"} aria-pressed={darkMode}><span className="theme-icon">{darkMode ? "☼" : "☾"}</span><span className="theme-label">{darkMode ? "Light" : "Dark"}</span></button><Link href="/planner" className="header-cta">Try the planner <span>↗</span></Link></nav>
     </header>
 
     <section className="hero" aria-labelledby="hero-title">
@@ -98,12 +125,12 @@ export default function Home() {
       <div className="hero-aside"><div className="aside-label">A FIELD GUIDE FOR<br />THE NEXT STEP</div><div className="aside-stamp">NC<br /><b>✦</b><br />BUILD<br />BETTER</div></div>
     </section>
 
-    <section id="how-it-works" className="story-section">
-      <div className="story-intro"><p className="eyebrow">A BETTER WAY THROUGH</p><h2>Four moments that make the process <em>feel lighter.</em></h2><p>Scroll, use the controls, or press your arrow keys to move through the route.</p></div>
+    <section id="how-it-works" ref={storyRef} className="story-section">
+      <div className="story-sticky"><div className="story-intro"><p className="eyebrow">A BETTER WAY THROUGH</p><h2>Four moments that make the process <em>feel lighter.</em></h2><p>Keep scrolling to move through the route. The controls and arrow keys are available too.</p></div>
       <div className="story-grid">
         <div className="story-controls" role="tablist" aria-label="How Permivo works">{scenes.map((item, index) => <button key={item.num} className={scene === index ? "active" : ""} onClick={() => setScene(index)} role="tab" aria-selected={scene === index}><span>{item.num}</span><strong>{item.label}</strong><i /></button>)}</div>
         <div className="story-card"><div className="story-text" key={scene}><p className="eyebrow orange">{current.num} · {current.kicker.toUpperCase()}</p><h3>{current.title}</h3><p>{current.body}</p><Link href="/planner" className="text-link">Explore the planner <span>→</span></Link></div><div className="art-stage" ref={stageRef} onMouseMove={handleMove} onMouseLeave={() => setTilt({ x: 0, y: 0 })}><SceneArt index={scene} tilt={tilt} /></div></div>
-      </div>
+      </div></div>
     </section>
 
     <section id="tools" className="tools-section"><div className="section-heading"><div><p className="eyebrow">05 · THE TOOLS</p><h2>Three tools, <em>one route.</em></h2></div><p>Everything you need to move from “what if?” to “what’s next?”</p></div><div className="tool-grid"><Link href="/planner" className="tool-card featured"><span className="tool-number">01 / LIVE</span><h3>Route planner <span>↗</span></h3><p>Pick a project and location. See which reviews may apply, with stated times and sources.</p><div className="card-arrow">Open planner →</div></Link><Link href="/tracker" className="tool-card"><span className="tool-number">02 / LIVE</span><h3>Permit tracker <span>↗</span></h3><p>Log dates, comments, and holds. Keep your real timeline in view.</p><div className="card-arrow">Open tracker →</div></Link><div className="tool-card coming"><span className="tool-number">03 / SOON</span><h3>Readiness checklist</h3><p>Understand what each requirement is, why it exists, and how to complete it.</p><div className="card-arrow">Coming next</div></div></div></section>

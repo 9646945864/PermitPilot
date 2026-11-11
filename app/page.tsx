@@ -44,7 +44,8 @@ function SceneArt({ index, tilt }: { index: number; tilt: { x: number; y: number
 export default function Home() {
   const [scene, setScene] = useState(0);
   const [filter, setFilter] = useState<"all" | "verified" | "open">("all");
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(true);
+  const [showSceneDetails, setShowSceneDetails] = useState(true);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [darkMode, setDarkMode] = useState(false);
   const [pageReady, setPageReady] = useState(false);
@@ -129,7 +130,7 @@ export default function Home() {
       <div className="story-sticky"><div className="story-intro"><p className="eyebrow">A BETTER WAY THROUGH</p><h2>Four moments that make the process <em>feel lighter.</em></h2><p>Keep scrolling to move through the route. The controls and arrow keys are available too.</p></div>
       <div className="story-grid">
         <div className="story-controls" role="tablist" aria-label="How Permivo works">{scenes.map((item, index) => <button key={item.num} className={scene === index ? "active" : ""} onClick={() => setScene(index)} role="tab" aria-selected={scene === index}><span>{item.num}</span><strong>{item.label}</strong><i /></button>)}</div>
-        <div className="story-card"><div className="story-text" key={scene}><p className="eyebrow orange">{current.num} · {current.kicker.toUpperCase()}</p><h3>{current.title}</h3><p>{current.body}</p><Link href="/planner" className="text-link">Explore the planner <span>→</span></Link></div><div className="art-stage" ref={stageRef} onMouseMove={handleMove} onMouseLeave={() => setTilt({ x: 0, y: 0 })}><SceneArt index={scene} tilt={tilt} /></div></div>
+        <div className="story-card"><div className="story-text" key={scene}><p className="eyebrow orange">{current.num} · {current.kicker.toUpperCase()}</p><h3>{current.title}</h3><p>{current.body}</p>{scene === 2 && <div className="scene-details"><div><b>Current status</b><span>Review timeline is active</span></div><div><b>Next move</b><span>Log the next agency comment</span></div><button type="button" onClick={() => setShowSceneDetails((value) => !value)}>{showSceneDetails ? "Hide details ↑" : "Show details ↓"}</button></div>}{scene !== 2 || showSceneDetails ? <Link href="/planner" className="text-link">Explore the planner <span>→</span></Link> : <button type="button" className="text-link detail-reopen" onClick={() => setShowSceneDetails(true)}>Show details <span>↓</span></button>}</div><div className="art-stage" ref={stageRef} onMouseMove={handleMove} onMouseLeave={() => setTilt({ x: 0, y: 0 })}><SceneArt index={scene} tilt={tilt} /></div></div>
       </div></div>
     </section>
 

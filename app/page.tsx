@@ -123,12 +123,12 @@ export default function Home() {
         <div className="hero-actions"><Link href="/planner" className="primary-button">Plan a project <span>→</span></Link><a href="#how-it-works" className="text-link">See how it works <span>↓</span></a></div>
         <div className="trust-row"><span><b>01</b> Mecklenburg County</span><span><b>●</b> Sources, not guesses</span></div>
       </div>
-      <div className="hero-aside"><div className="aside-label">A FIELD GUIDE FOR<br />THE NEXT STEP</div><div className="aside-stamp">NC<br /><b>✦</b><br />BUILD<br />BETTER</div></div>
+      <div className="hero-aside"><div className="hero-image-wrap"><div className="hero-image-label">AI-ASSISTED PERMIT ROUTING</div><img src="/permit-ai-hero.png" alt="A small residential contractor using AI-assisted permit guidance beside a house plan" className="hero-image" /></div><div className="aside-stamp">NC<br /><b>✦</b><br />BUILD<br />BETTER</div></div>
     </section>
 
     <section id="how-it-works" ref={storyRef} className="story-section">
-      <div className="story-sticky"><div className="story-intro"><p className="eyebrow">A BETTER WAY THROUGH</p><h2>Four moments that make the process <em>feel lighter.</em></h2><p>Keep scrolling to move through the route. The controls and arrow keys are available too.</p></div>
-      <div className="story-grid">
+      <div className="story-intro"><p className="eyebrow">A BETTER WAY THROUGH</p><h2>Four moments that make the process <em>feel lighter.</em></h2><p>Keep scrolling to move through the route. The controls and arrow keys are available too.</p></div>
+      <div className="story-pin"><div className="story-grid">
         <div className="story-controls" role="tablist" aria-label="How Permivo works">{scenes.map((item, index) => <button key={item.num} className={scene === index ? "active" : ""} onClick={() => setScene(index)} role="tab" aria-selected={scene === index}><span>{item.num}</span><strong>{item.label}</strong><i /></button>)}</div>
         <div className="story-card"><div className="story-text" key={scene}><p className="eyebrow orange">{current.num} · {current.kicker.toUpperCase()}</p><h3>{current.title}</h3><p>{current.body}</p>{scene === 2 && <div className="scene-details"><div><b>Current status</b><span>Review timeline is active</span></div><div><b>Next move</b><span>Log the next agency comment</span></div><button type="button" onClick={() => setShowSceneDetails((value) => !value)}>{showSceneDetails ? "Hide details ↑" : "Show details ↓"}</button></div>}{scene !== 2 || showSceneDetails ? <Link href="/planner" className="text-link">Explore the planner <span>→</span></Link> : <button type="button" className="text-link detail-reopen" onClick={() => setShowSceneDetails(true)}>Show details <span>↓</span></button>}</div><div className="art-stage" ref={stageRef} onMouseMove={handleMove} onMouseLeave={() => setTilt({ x: 0, y: 0 })}><SceneArt index={scene} tilt={tilt} /></div></div>
       </div></div>

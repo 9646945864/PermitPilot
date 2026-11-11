@@ -35,3 +35,18 @@ body,.site-header,.hero,.story-section,.tools-section,.status-section,.feedback-
 .story-section{min-height:600vh}.story-sticky{min-height:calc(100vh - 72px)}
 .scene-details{margin:22px 0 24px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;gap:10px;animation:fade .35s ease}.scene-details>div{display:flex;justify-content:space-between;gap:18px;font-size:12px}.scene-details b{font:10px 'DM Mono',monospace;color:var(--deep);text-transform:uppercase;letter-spacing:.08em}.scene-details span{color:var(--muted);text-align:right}.scene-details button{justify-self:start;border:0;background:none;padding:0;color:var(--deep);cursor:pointer;font:500 11px 'DM Mono',monospace}.detail-reopen{border:0;background:none;cursor:pointer}
 @media(max-width:800px){.story-section{min-height:520vh}.story-sticky{min-height:calc(100vh - 64px)}}
+
+/* Prevent the homepage's editorial defaults from leaking into Tailwind utility pages. */
+body:has(main:not(.home-page)){background:#fff;color:#111827;font-family:ui-sans-serif,system-ui,sans-serif}
+:where(main:not(.home-page)) h1,:where(main:not(.home-page)) h2,:where(main:not(.home-page)) h3{font-family:inherit;letter-spacing:normal;margin:revert}
+/* Keep the entire second section readable while the longer scroll track drives its slides. */
+.story-section{min-height:460vh}.story-sticky{top:72px;min-height:calc(100vh - 72px);padding-top:clamp(28px,4vw,54px);padding-bottom:clamp(28px,4vw,54px)}.story-intro h2{font-size:clamp(34px,4.6vw,60px)}.story-grid{margin-top:clamp(24px,3vw,42px)}.art-shell{max-height:390px}.art-stage{max-height:390px}
+@media(max-width:800px){.story-section{min-height:420vh}.story-sticky{top:64px;min-height:calc(100vh - 64px);padding-top:22px;padding-bottom:22px}.story-intro h2{font-size:clamp(32px,9vw,48px)}.art-shell,.art-stage{max-height:none}}
+
+/* The intro stays in normal flow; only the slide panel pins to the viewport. */
+.story-section{min-height:460vh;padding-top:clamp(70px,8vw,110px);padding-bottom:clamp(70px,8vw,110px)}.story-section>.story-intro{max-width:690px;margin:0 auto;width:100%}.story-pin{position:sticky;top:72px;min-height:calc(100vh - 72px);display:flex;align-items:center}.story-pin .story-grid{width:100%;margin-top:clamp(28px,4vw,54px)}
+@media(max-width:800px){.story-section{min-height:420vh;padding-top:48px;padding-bottom:48px}.story-pin{position:relative;top:auto;min-height:auto;display:block}.story-pin .story-grid{margin-top:30px}}
+
+.hero-image-wrap{position:relative;width:min(100%,360px);margin-left:auto;border:1px solid var(--line);background:var(--light);padding:10px 10px 26px;transform:rotate(2deg);box-shadow:12px 14px 0 #f7a267;overflow:hidden}.hero-image{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}.hero-image-label{position:absolute;z-index:1;left:22px;bottom:7px;color:var(--deep);font:500 9px 'DM Mono',monospace;letter-spacing:.09em}.hero-aside{width:100%}.hero-aside .aside-stamp{margin-left:auto;margin-right:12px;margin-top:36px}
+html[data-theme="dark"] .hero-image-wrap{background:#2b211c;box-shadow:12px 14px 0 #a94d16}
+@media(max-width:800px){.hero-image-wrap{width:min(100%,420px);margin:0 auto}.hero-aside .aside-stamp{margin-top:30px;margin-right:auto}}

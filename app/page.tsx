@@ -109,7 +109,7 @@ export default function Home() {
     setTilt({ x: Number(((event.clientY - rect.top) / rect.height * -8 + 4).toFixed(2)), y: Number(((event.clientX - rect.left) / rect.width * 12 - 6).toFixed(2)) });
   }
 
-  return <main className={`page-shell ${pageReady ? "is-ready" : ""}`}>
+  return <main className={`home-page page-shell ${pageReady ? "is-ready" : ""}`}>
     <header className="site-header">
       <Link href="/" className="brand" aria-label="Permivo home"><Mark /><span>permivo</span></Link>
       <nav><a href="#tools">Tools</a><a href="#status">Status</a><Link href="/planner" className="nav-tool-link">Planner</Link><Link href="/tracker" className="nav-tool-link">Tracker</Link><button type="button" className="theme-toggle" onClick={toggleTheme} aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"} aria-pressed={darkMode}><span className="theme-icon">{darkMode ? "☼" : "☾"}</span><span className="theme-label">{darkMode ? "Light" : "Dark"}</span></button><Link href="/planner" className="header-cta">Try the planner <span>↗</span></Link></nav>

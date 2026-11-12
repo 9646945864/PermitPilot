@@ -41,6 +41,7 @@ const CITY_PAGE =
 const COUNTY_PLAN_REVIEW = "https://code.mecknc.gov/service/residential-plan-review-services";
 const COUNTY_PERMITTING = "https://code.mecknc.gov/permitting";
 const COUNTY_ACA = "https://code.mecknc.gov/customer-tools/aca";
+const COUNTY_RPR = "https://code.mecknc.gov/plan-review/residential";
 const COUNTY_SITE = "https://code.mecknc.gov";
 const REBIC_2023 = "https://rebic.com/two-for-tuesday-may-2-2023";
 
@@ -75,15 +76,15 @@ export const RULES: Rule[] = [
   },
   {
     id: "R3",
-    kind: "question",
+    kind: "step",
     projects: ["deck"],
     where: "county",
-    title: "Does a deck go through county plan review?",
-    statedTime: "Unknown",
-    sourceLabel: "Ask the county’s residential code line (980-314-2633, follow the prompts)",
-    sourceUrl: COUNTY_PERMITTING,
-    status: "unverified",
-    note: "The county says residential new construction and additions require plan review. Decks are not named. Its Other Permits Not Requiring Plan Review page is described for commercial projects, so do not assume it covers decks.",
+    title: "County plan review: a stand-alone deck is not on the county’s list",
+    statedTime: "Not applicable if plan review is not required",
+    sourceLabel: "Mecklenburg Code Enforcement, Residential Plan Review",
+    sourceUrl: COUNTY_RPR,
+    status: "partly",
+    note: "The county’s plan review list excludes decks and screen porches from its enclosed-addition trigger and does not name decks otherwise. That is not a statement that decks need no permit or inspection. Converting a deck into an enclosed room does trigger plan review. Confirm with the county.",
   },
   {
     id: "R4",
@@ -116,10 +117,10 @@ export const RULES: Rule[] = [
     where: "county",
     title: "County plan review",
     statedTime: COUNTY_AVG,
-    sourceLabel: "Mecklenburg Permitting page; CIRC email, Nov 2026",
-    sourceUrl: COUNTY_PERMITTING,
+    sourceLabel: "Mecklenburg Residential Plan Review; CIRC email, Nov 2026",
+    sourceUrl: COUNTY_RPR,
     status: "verified",
-    note: "The county says residential additions require plan review. The 3-week figure is an average, not a guarantee.",
+    note: "Plan review applies to an enclosed addition that adds 100 sq. ft. or more to the footprint, and to an added story. Smaller additions: confirm with the county. The county’s page states a goal of 7 days on average after acceptance, which differs from the 3-week average CIRC reported. The 3 weeks is an average, not a guarantee.",
   },
   {
     id: "R7",
@@ -162,12 +163,36 @@ export const RULES: Rule[] = [
     kind: "step",
     projects: ["garage"],
     where: "county",
-    title: "County building permit",
+    title: "County building permit (plan review only for multi-story garages or garages with living space)",
     statedTime: COUNTY_AVG + " (if plan review applies)",
-    sourceLabel: "Mecklenburg Accela page; CIRC email, Nov 2026",
-    sourceUrl: COUNTY_ACA,
-    status: "partly",
-    note: "Garages are listed among residential projects submitted in the county’s Accela system. Whether plan review applies is not confirmed.",
+    sourceLabel: "Mecklenburg Residential Plan Review",
+    sourceUrl: COUNTY_RPR,
+    status: "verified",
+    note: "The county lists new multi-story detached garages and any garage with living space for plan review. A one-story detached garage with no living space is not on the list. It still needs a permit. Confirm with the county.",
+  },
+  {
+    id: "R11",
+    kind: "step",
+    projects: ["addition", "garage"],
+    where: "county",
+    title: "Submittal is checked for completeness before review starts",
+    statedTime: "Review goal of 7 days on average after acceptance (one- and two-family)",
+    sourceLabel: "Mecklenburg Residential Plan Review",
+    sourceUrl: COUNTY_RPR,
+    status: "verified",
+    note: "Plans are checked against the submittal requirements before acceptance. If information is missing, the county emails what is needed. The review clock starts at acceptance, so time before acceptance is not in the stated time.",
+  },
+  {
+    id: "R12",
+    kind: "step",
+    projects: ["addition", "garage"],
+    where: "county",
+    title: "Re-review fee after three building review cycles",
+    statedTime: "$145 per hour",
+    sourceLabel: "Mecklenburg Residential Plan Review",
+    sourceUrl: COUNTY_RPR,
+    status: "verified",
+    note: "The county says projects reviewed three or more cycles in the building discipline incur an hourly review fee of $145. Check the fee ordinance for details.",
   },
 ];
 

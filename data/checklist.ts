@@ -1,8 +1,8 @@
 // Permivo readiness checklist data.
 // Each item explains what it is, why it matters, and how to do it, and carries a source and status.
 // Mark an item "verified" only when an official county or city page, or a written agency reply, supports it.
-// Items marked "unverified" are typical plan contents. Replace them with the county’s own
-// Project Submittal Requirements list once you have it.
+// Items marked "unverified" are typical plan contents. The county’s Project Submittal Requirements
+// cover file and drawing format only, not what each project type must show. Still need that list.
 
 import type { Location, ProjectType, Status } from "./rules";
 
@@ -34,7 +34,7 @@ const PLAN_REVIEW = "https://code.mecknc.gov/plan-review/residential";
 const PERMITTING = "https://code.mecknc.gov/permitting";
 const CITY_PAGE =
   "https://www.charlottenc.gov/Growth-and-Development/Getting-Started-on-Your-Project/Individual-Residential-Lot-Reviews";
-const TYPICAL_NOTE = "Typical item, not confirmed for Mecklenburg. Check the county’s Project Submittal Requirements.";
+const TYPICAL_NOTE = "Typical item, not confirmed for Mecklenburg. Ask the county what it requires for your project type.";
 
 const ALL3: ProjectType[] = ["deck", "addition", "garage"];
 
@@ -57,13 +57,13 @@ export const CHECKLIST: ChecklistItem[] = [
     group: "before",
     projects: ALL3,
     where: "any",
-    title: "Confirm whether your project goes through plan review",
-    what: "The county says plan review applies to new construction, remodels, additions, and accessory buildings and structures. Decks are not named.",
-    why: "Plan review changes what you must submit and how long it takes.",
-    how: "Call the county’s Plan Review Facilitator Line, 980-314-2633, option 2-1-1-2, and describe your project in one sentence. Write down the answer and the date.",
+    title: "Find out whether your project goes through plan review",
+    what: "The county lists when it does a building code plan review. Among them: an enclosed addition that adds 100 sq. ft. or more to the footprint (decks and screen porches excluded), a new story, a multi-story detached garage or any garage with living space, and accessory buildings of more than one level.",
+    why: "Plan review changes what you submit and how long it takes. A deck, or a one-story garage with no living space, is not named in the county’s list.",
+    how: "Match your project to the county’s list. If it is not named, or you are close to a line (for example, an addition near 100 sq. ft.), call the Plan Review Facilitator Line, 980-314-2633, option 2-1-1-2, and write down the answer and the date.",
     sourceLabel: "Mecklenburg Code Enforcement, Residential Plan Review",
     sourceUrl: PLAN_REVIEW,
-    status: "partly",
+    status: "verified",
   },
   {
     id: "B3",
@@ -86,7 +86,7 @@ export const CHECKLIST: ChecklistItem[] = [
     title: "Online permit application",
     what: "The application you file in the county’s online permit system.",
     why: "It opens the record that your plans, forms, and review all attach to.",
-    how: "Submit the application online. When plan review applies, choose the RTAC Plan Review Path option on the plan option screen.",
+    how: "Log in to your contractor or homeowner account, choose New Building Permit, and select the address. When plan review applies, pick “RTAC Plan Review Path” and describe the work in “Expanded Scope of Work”. Do not upload plans on this screen. Click submit only once, since extra clicks create duplicate permits. Add emails for the applicant and designer, because plan upload links are sent there.",
     sourceLabel: "Mecklenburg Code Enforcement, Residential Plan Review",
     sourceUrl: PLAN_REVIEW,
     status: "verified",
@@ -109,13 +109,39 @@ export const CHECKLIST: ChecklistItem[] = [
     group: "application",
     projects: ALL3,
     where: "any",
-    title: "Project plans as PDF files",
-    what: "Your drawings, uploaded with the application.",
-    why: "The county checks that a submittal has enough information for a code review before it accepts the plans, and its review-time goal starts at acceptance.",
-    how: "Upload clear PDF drawings. The county states a 150-page, 40 MB limit for master plans. Ask what applies to your project type.",
-    sourceLabel: "Mecklenburg Code Enforcement, Residential Plan Review and Master Plan pages",
+    title: "Upload plans in the right place, then release for review",
+    what: "After you submit the application you get a submittal number and a personal plan upload link (also in the confirmation email and as “Upload Plan Documents” on your permit).",
+    why: "The county says that link is the only correct place for plans. Uploading anywhere else delays processing. Plans are checked for completeness before they are accepted, and the review clock starts at acceptance.",
+    how: "Upload the plans and forms, then click Release for Review. No error message means it went through. If information is missing, the county emails what it needs. Once accepted you get a project number to track progress.",
+    sourceLabel: "Mecklenburg Code Enforcement, Residential Plan Review",
     sourceUrl: PLAN_REVIEW,
-    status: "partly",
+    status: "verified",
+  },
+  {
+    id: "A5",
+    group: "application",
+    projects: ALL3,
+    where: "any",
+    title: "Drawing and file format rules",
+    what: "The county’s submittal requirements for how plans are prepared.",
+    why: "A submittal is checked against these before it is accepted, so format mistakes can delay you before review even starts.",
+    how: "Put all plans in one PDF (40 MB limit). Draw in landscape, to scale, on at least 17 x 11 in. for projects over 500 sq. ft. or 8.5 x 11 in. for projects under 500 sq. ft. Name the designer, architect or engineer, with address and contact. State heated and unheated sq. ft. for each story and the total. Number sheets with CAD-style names (A-1.0, S-2.1). Bookmark the pages. Keep supporting documents as separate attachments. Put any professional seal in the upper two-thirds of the title block. Include all trade contractors on the application. Keep emails in HTML format so links work.",
+    sourceLabel: "Mecklenburg Code Enforcement, Project Submittal Requirements",
+    sourceUrl: PLAN_REVIEW,
+    status: "verified",
+  },
+  {
+    id: "A6",
+    group: "application",
+    projects: ["addition", "garage"],
+    where: "any",
+    title: "Know the re-review fee",
+    what: "The county charges $145.00 per hour for projects reviewed three or more cycles in the building discipline.",
+    why: "Each correction round that does not fully fix the comments moves you toward that fee.",
+    how: "Answer every reviewer comment completely and recheck the redlines before you resubmit.",
+    sourceLabel: "Mecklenburg Code Enforcement, Residential Plan Review",
+    sourceUrl: PLAN_REVIEW,
+    status: "verified",
   },
   {
     id: "A4",

@@ -54,3 +54,38 @@ html[data-theme="dark"] .hero-image-wrap{background:#2b211c;box-shadow:12px 14px
 /* Compact second section: one complete view with wheel/keyboard/control slide changes. */
 .story-section{min-height:calc(100vh - 72px);padding:clamp(52px,7vw,88px) clamp(20px,9vw,140px)}.story-section>.story-intro{margin:0;max-width:760px}.story-pin{position:relative;top:auto;min-height:0;display:block}.story-pin .story-grid{margin-top:clamp(24px,3vw,38px)}.story-pin .art-shell,.story-pin .art-stage{max-height:310px}.story-pin .story-card{gap:28px}.story-pin .story-text h3{font-size:clamp(26px,3vw,42px)}
 @media(max-width:800px){.story-section{min-height:auto;padding:58px 20px}.story-pin .story-grid{margin-top:26px}.story-pin .art-shell,.story-pin .art-stage{max-height:none}}
+
+
+/* Append to the END of app/globals.css. Replaces my earlier patch.
+   Uses .home-page so it beats the older stacked rules. */
+
+/* ---- Hero: photo sized as a framed card, shown on mobile too ---- */
+.home-page .hero { grid-template-columns: minmax(0, 1fr) minmax(240px, 380px); padding-block: clamp(48px, 7vw, 96px); }
+.home-page .hero-aside { display: block; width: 100%; padding-bottom: 0; align-self: center; }
+.home-page .hero-image-wrap { width: 100%; max-width: 380px; margin-left: auto; padding: 10px 10px 28px; }
+.home-page .hero-image { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+
+/* ---- Story section: compact, art box keeps its proportions ---- */
+.home-page .story-section { min-height: 0; padding-block: clamp(48px, 6vw, 80px); }
+.home-page .story-pin { position: static; min-height: 0; display: block; }
+.home-page .story-pin .story-grid {
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 44px);
+  align-items: center;
+  margin-top: clamp(20px, 3vw, 36px);
+}
+.home-page .story-pin .story-card { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(20px, 3vw, 40px); }
+.home-page .story-pin .art-stage { width: min(100%, calc(48vh * 1.15)); max-width: 520px; max-height: none; margin-inline: auto; }
+.home-page .story-pin .art-shell { width: 100%; max-height: none; }
+
+/* ---- Small screens ---- */
+@media (max-width: 800px) {
+  .home-page .hero { grid-template-columns: 1fr; }
+  .home-page .hero-aside { max-width: 360px; margin: 8px auto 0; }
+  .home-page .hero-image-wrap { margin: 0 auto; }
+  .home-page .aside-stamp { display: none; }
+  .home-page .story-pin .story-grid,
+  .home-page .story-pin .story-card { grid-template-columns: 1fr; }
+  .home-page .story-pin .art-stage { width: 100%; max-width: 420px; }
+}
+

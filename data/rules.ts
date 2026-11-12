@@ -8,9 +8,38 @@
 export type ProjectType = "deck" | "addition" | "garage" | "trade";
 export type Location = "city" | "outside";
 export type Status = "verified" | "partly" | "likely" | "unverified";
+export type JurisdictionId = "mecklenburg"; // add an id here when a new place is added
+
+export interface Jurisdiction {
+  id: JurisdictionId;
+  name: string;
+  // "verified" = rules checked against official sources with dates.
+  // "directory" = only the office and how to reach it, no verified rules yet.
+  coverage: "verified" | "directory";
+  officeLabel: string;
+  officeUrl: string;
+  officePhone?: string;
+  note: string;
+}
+
+export const JURISDICTIONS: Record<JurisdictionId, Jurisdiction> = {
+  mecklenburg: {
+    id: "mecklenburg",
+    name: "Mecklenburg County, NC",
+    coverage: "verified",
+    officeLabel: "Mecklenburg County Code Enforcement",
+    officeUrl: "https://code.mecknc.gov",
+    officePhone: "980-314-2633",
+    note: "Includes the City of Charlotte lot review for projects inside city limits.",
+  },
+};
+
+export const DEFAULT_JURISDICTION: JurisdictionId = "mecklenburg";
 
 export interface Rule {
   id: string;
+  jurisdiction: JurisdictionId;
+  checkedOn: string; // YYYY-MM-DD, the last day this rule was checked against its source
   kind: "step" | "question"; // "question" = an open item that needs an agency answer
   projects: ProjectType[];
   where: "city" | "county"; // "city" = only inside Charlotte city limits; "county" = whole county
@@ -52,6 +81,8 @@ const COUNTY_AVG = "Typically averages about 3 weeks, first come first served";
 export const RULES: Rule[] = [
   {
     id: "R1",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     kind: "step",
     projects: ["deck"],
     where: "city",
@@ -64,6 +95,8 @@ export const RULES: Rule[] = [
   },
   {
     id: "R2",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     kind: "step",
     projects: ["deck"],
     where: "county",
@@ -76,6 +109,8 @@ export const RULES: Rule[] = [
   },
   {
     id: "R3",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     kind: "step",
     projects: ["deck"],
     where: "county",
@@ -88,6 +123,8 @@ export const RULES: Rule[] = [
   },
   {
     id: "R4",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     kind: "step",
     projects: ["deck", "addition", "garage", "trade"],
     where: "county",
@@ -100,6 +137,8 @@ export const RULES: Rule[] = [
   },
   {
     id: "R5",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     kind: "step",
     projects: ["addition"],
     where: "city",
@@ -112,6 +151,8 @@ export const RULES: Rule[] = [
   },
   {
     id: "R6",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     kind: "step",
     projects: ["addition"],
     where: "county",
@@ -124,6 +165,8 @@ export const RULES: Rule[] = [
   },
   {
     id: "R7",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     kind: "step",
     projects: ["garage"],
     where: "city",
@@ -136,6 +179,8 @@ export const RULES: Rule[] = [
   },
   {
     id: "R8",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     kind: "step",
     projects: ["trade"],
     where: "county",
@@ -148,6 +193,8 @@ export const RULES: Rule[] = [
   },
   {
     id: "R9",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     kind: "step",
     projects: ["deck", "addition", "garage", "trade"],
     where: "city",
@@ -160,6 +207,8 @@ export const RULES: Rule[] = [
   },
   {
     id: "R10",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     kind: "step",
     projects: ["garage"],
     where: "county",
@@ -172,6 +221,8 @@ export const RULES: Rule[] = [
   },
   {
     id: "R11",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     kind: "step",
     projects: ["addition", "garage"],
     where: "county",
@@ -184,6 +235,8 @@ export const RULES: Rule[] = [
   },
   {
     id: "R12",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     kind: "step",
     projects: ["addition", "garage"],
     where: "county",
@@ -196,9 +249,14 @@ export const RULES: Rule[] = [
   },
 ];
 
-export function rulesFor(project: ProjectType, location: Location): Rule[] {
+export function rulesFor(
+  project: ProjectType,
+  location: Location,
+  jurisdiction: JurisdictionId = DEFAULT_JURISDICTION
+): Rule[] {
   return RULES.filter(
     (r) =>
+      r.jurisdiction === jurisdiction &&
       r.projects.includes(project) &&
       (r.where === "county" || location === "city")
   );

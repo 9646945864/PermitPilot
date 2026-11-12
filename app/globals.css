@@ -50,3 +50,7 @@ body:has(main:not(.home-page)){background:#fff;color:#111827;font-family:ui-sans
 .hero-image-wrap{position:relative;width:min(100%,360px);margin-left:auto;border:1px solid var(--line);background:var(--light);padding:10px 10px 26px;transform:rotate(2deg);box-shadow:12px 14px 0 #f7a267;overflow:hidden}.hero-image{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}.hero-image-label{position:absolute;z-index:1;left:22px;bottom:7px;color:var(--deep);font:500 9px 'DM Mono',monospace;letter-spacing:.09em}.hero-aside{width:100%}.hero-aside .aside-stamp{margin-left:auto;margin-right:12px;margin-top:36px}
 html[data-theme="dark"] .hero-image-wrap{background:#2b211c;box-shadow:12px 14px 0 #a94d16}
 @media(max-width:800px){.hero-image-wrap{width:min(100%,420px);margin:0 auto}.hero-aside .aside-stamp{margin-top:30px;margin-right:auto}}
+
+/* Compact second section: one complete view with wheel/keyboard/control slide changes. */
+.story-section{min-height:calc(100vh - 72px);padding:clamp(52px,7vw,88px) clamp(20px,9vw,140px)}.story-section>.story-intro{margin:0;max-width:760px}.story-pin{position:relative;top:auto;min-height:0;display:block}.story-pin .story-grid{margin-top:clamp(24px,3vw,38px)}.story-pin .art-shell,.story-pin .art-stage{max-height:310px}.story-pin .story-card{gap:28px}.story-pin .story-text h3{font-size:clamp(26px,3vw,42px)}
+@media(max-width:800px){.story-section{min-height:auto;padding:58px 20px}.story-pin .story-grid{margin-top:26px}.story-pin .art-shell,.story-pin .art-stage{max-height:none}}

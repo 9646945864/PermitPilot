@@ -132,7 +132,7 @@ export default function Home() {
         <div className="hero-actions"><Link href="/planner" className="primary-button">Plan a project <span>→</span></Link><a href="#how-it-works" className="text-link">See how it works <span>↓</span></a></div>
         <div className="trust-row"><span><b>01</b> Mecklenburg County</span><span><b>●</b> Sources, not guesses</span></div>
       </div>
-      <div className="hero-aside"><div className="hero-image-wrap"><div className="hero-image-label">AI-ASSISTED PERMIT ROUTING</div><img src="/permit-ai-hero.png" alt="A small residential contractor using AI-assisted permit guidance beside a house plan" className="hero-image" /></div><div className="aside-stamp">NC<br /><b>✦</b><br />BUILD<br />BETTER</div></div>
+      <div className="hero-aside"><div className="hero-image-wrap"><div className="hero-image-label">AI-ASSISTED PERMIT ROUTING</div><img src="/logo/permit-ai-hero.png" alt="A small residential contractor using AI-assisted permit guidance beside a house plan" className="hero-image" /></div><div className="aside-stamp">NC<br /><b>✦</b><br />BUILD<br />BETTER</div></div>
     </section>
 
     <section id="how-it-works" ref={storyRef} className="story-section">

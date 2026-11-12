@@ -94,6 +94,7 @@ export default function Home() {
           <a href="#status">Status</a>
           <Link href="/planner" className="nav-tool-link">Planner</Link>
           <Link href="/tracker" className="nav-tool-link">Tracker</Link>
+          <Link href="/checklist" className="nav-tool-link">Checklist</Link>
           <button type="button" className="theme-toggle" onClick={toggleTheme} aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"} aria-pressed={darkMode}>
             <span className="theme-icon">{darkMode ? "☼" : "☾"}</span>
             <span className="theme-label">{darkMode ? "Light" : "Dark"}</span>
@@ -188,12 +189,12 @@ export default function Home() {
             <p>Log dates, comments, and holds. Keep your real timeline in view.</p>
             <div className="card-arrow">Open tracker →</div>
           </Link>
-          <div className="tool-card coming">
-            <span className="tool-number">03 / SOON</span>
-            <h3>Readiness checklist</h3>
-            <p>Understand what each requirement is, why it exists, and how to complete it.</p>
-            <div className="card-arrow">Coming next</div>
-          </div>
+          <Link href="/checklist" className="tool-card">
+            <span className="tool-number">03 / LIVE</span>
+            <h3>Readiness checklist <span>↗</span></h3>
+            <p>See what each requirement is, why it exists, and how to complete it. Tick items off as you go.</p>
+            <div className="card-arrow">Open checklist →</div>
+          </Link>
         </div>
       </section>
 
@@ -251,7 +252,7 @@ export default function Home() {
       <footer>
         <Link href="/" className="brand"><Mark /><span>permivo</span></Link>
         <span>Early prototype · Not legal advice</span>
-        <span><Link href="/planner">Planner</Link><Link href="/tracker">Tracker</Link></span>
+        <span><Link href="/planner">Planner</Link><Link href="/tracker">Tracker</Link><Link href="/checklist">Checklist</Link></span>
       </footer>
     </main>
   );

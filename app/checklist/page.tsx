@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import ToolHeader from "../components/ToolHeader";
 import { useEffect, useMemo, useState } from "react";
 import { PROJECT_LABELS, STATUS_LABELS, type Location, type ProjectType, type Status } from "../../data/rules";
 import { GROUP_LABELS, GROUP_ORDER, itemsFor } from "../../data/checklist";
@@ -59,10 +60,8 @@ export default function ChecklistPage() {
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-8">
-      <p className="text-sm">
-        <Link href="/" className="text-orange-800 underline">← Permivo home</Link>
-      </p>
-      <h1 className="mt-3 text-2xl font-semibold text-gray-900">Readiness checklist</h1>
+      <ToolHeader />
+      <h1 className="tool-title text-3xl text-[#211b18]">Readiness checklist</h1>
       <p className="mt-1 text-gray-600">
         What to have ready before you submit. Each item explains what it is, why it matters, and how to do it.
       </p>
@@ -111,7 +110,7 @@ export default function ChecklistPage() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-lg border border-gray-200 bg-white p-4" aria-live="polite">
+      <section className="mt-6 rounded-lg border border-orange-100 bg-white p-4" aria-live="polite">
         <div className="flex items-baseline justify-between">
           <p className="text-sm font-medium text-gray-900">
             {doneCount} of {items.length} ready
@@ -136,7 +135,7 @@ export default function ChecklistPage() {
               {groupItems.map((item) => {
                 const checked = !!done[keyFor(item.id)];
                 return (
-                  <li key={item.id} className="rounded-lg border border-gray-200 bg-white p-4">
+                  <li key={item.id} className="rounded-lg border border-orange-100 bg-white p-4">
                     <div className="flex items-start gap-3">
                       <input
                         id={`item-${item.id}`}

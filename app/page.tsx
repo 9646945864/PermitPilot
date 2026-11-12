@@ -51,6 +51,7 @@ export default function Home() {
   const [pageReady, setPageReady] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
   const storyRef = useRef<HTMLElement>(null);
+  const wheelLock = useRef(false);
 
   useEffect(() => {
     const savedTheme = window.localStorage.getItem("permivo-theme");
@@ -74,6 +75,7 @@ export default function Home() {
     let frame = 0;
     const updateSceneFromScroll = () => {
       frame = 0;
+      if (section.offsetHeight <= window.innerHeight * 1.5) return;
       const rect = section.getBoundingClientRect();
       const scrollable = Math.max(section.offsetHeight - window.innerHeight, 1);
       const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
@@ -109,6 +111,13 @@ export default function Home() {
     setTilt({ x: Number(((event.clientY - rect.top) / rect.height * -8 + 4).toFixed(2)), y: Number(((event.clientX - rect.left) / rect.width * 12 - 6).toFixed(2)) });
   }
 
+  function handleStoryWheel(event: React.WheelEvent<HTMLDivElement>) {
+    if (wheelLock.current || Math.abs(event.deltaY) < 12) return;
+    wheelLock.current = true;
+    setScene((value) => event.deltaY > 0 ? Math.min(scenes.length - 1, value + 1) : Math.max(0, value - 1));
+    window.setTimeout(() => { wheelLock.current = false; }, 500);
+  }
+
   return <main className={`home-page page-shell ${pageReady ? "is-ready" : ""}`}>
     <header className="site-header">
       <Link href="/" className="brand" aria-label="Permivo home"><Mark /><span>permivo</span></Link>
@@ -127,8 +136,8 @@ export default function Home() {
     </section>
 
     <section id="how-it-works" ref={storyRef} className="story-section">
-      <div className="story-intro"><p className="eyebrow">A BETTER WAY THROUGH</p><h2>Four moments that make the process <em>feel lighter.</em></h2><p>Keep scrolling to move through the route. The controls and arrow keys are available too.</p></div>
-      <div className="story-pin"><div className="story-grid">
+      <div className="story-intro"><p className="eyebrow">A BETTER WAY THROUGH</p><h2>Four moments that make the process <em>feel lighter.</em></h2><p>Scroll over the panel, use the controls, or press your arrow keys to move through the route.</p></div>
+      <div className="story-pin" onWheel={handleStoryWheel}><div className="story-grid">
         <div className="story-controls" role="tablist" aria-label="How Permivo works">{scenes.map((item, index) => <button key={item.num} className={scene === index ? "active" : ""} onClick={() => setScene(index)} role="tab" aria-selected={scene === index}><span>{item.num}</span><strong>{item.label}</strong><i /></button>)}</div>
         <div className="story-card"><div className="story-text" key={scene}><p className="eyebrow orange">{current.num} · {current.kicker.toUpperCase()}</p><h3>{current.title}</h3><p>{current.body}</p>{scene === 2 && <div className="scene-details"><div><b>Current status</b><span>Review timeline is active</span></div><div><b>Next move</b><span>Log the next agency comment</span></div><button type="button" onClick={() => setShowSceneDetails((value) => !value)}>{showSceneDetails ? "Hide details ↑" : "Show details ↓"}</button></div>}{scene !== 2 || showSceneDetails ? <Link href="/planner" className="text-link">Explore the planner <span>→</span></Link> : <button type="button" className="text-link detail-reopen" onClick={() => setShowSceneDetails(true)}>Show details <span>↓</span></button>}</div><div className="art-stage" ref={stageRef} onMouseMove={handleMove} onMouseLeave={() => setTilt({ x: 0, y: 0 })}><SceneArt index={scene} tilt={tilt} /></div></div>
       </div></div>

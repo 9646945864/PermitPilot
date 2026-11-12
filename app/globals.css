@@ -50,7 +50,8 @@ h1 em, h2 em { color: var(--orange); font-style: italic; }
 .orange { color: var(--orange); }
 
 /* Keep editorial defaults off the Tailwind pages (planner, tracker, checklist). */
-body:has(main:not(.home-page)) { background: #fff; color: #111827; font-family: ui-sans-serif, system-ui, sans-serif; }
+body:has(main:not(.home-page)) { background: #fff8f1; color: #211b18; font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif; }
+.tool-title { font-family: 'Fraunces', serif !important; font-weight: 400; letter-spacing: -0.03em !important; line-height: 1.1; }
 :where(main:not(.home-page)) h1,
 :where(main:not(.home-page)) h2,
 :where(main:not(.home-page)) h3 { font-family: inherit; letter-spacing: normal; margin: revert; }

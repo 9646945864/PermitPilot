@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ToolHeader from "../components/ToolHeader";
 
 const KINDS = [
   "Application submitted",
@@ -93,14 +94,14 @@ function PermitCard({
       : `Open ${m.elapsed} days`;
 
   return (
-    <details className="rounded-lg border border-gray-200 bg-white">
+    <details className="rounded-lg border border-orange-100 bg-white">
       <summary className="flex cursor-pointer items-center justify-between gap-3 p-4">
         <span className="font-medium text-gray-900">
           {permit.name} · {permit.type}
         </span>
         <span className="text-sm text-gray-600">{status}</span>
       </summary>
-      <div className="border-t border-gray-200 p-4">
+      <div className="border-t border-orange-100 p-4">
         <p className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-gray-700">
           <span>
             <b>{m.rounds}</b> comment rounds
@@ -178,7 +179,7 @@ function PermitCard({
               onAdd(permit.id, { id: uid(), date, party, kind, note: note.trim() });
               setNote("");
             }}
-            className="rounded bg-teal-800 px-3 py-2 text-sm font-medium text-white sm:col-span-3"
+            className="rounded bg-orange-800 px-3 py-2 text-sm font-medium text-white sm:col-span-3"
           >
             Add event
           </button>
@@ -262,12 +263,13 @@ export default function TrackerPage() {
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-8">
-      <h1 className="text-2xl font-semibold text-gray-900">Permivo tracker</h1>
+      <ToolHeader />
+      <h1 className="tool-title text-3xl text-[#211b18]">Permivo tracker</h1>
       <p className="mt-1 text-gray-600">
         Log each step of a permit. Compare the real timeline with what the agencies say.
       </p>
 
-      <section className="mt-5 rounded-lg border border-gray-200 bg-white p-4" aria-live="polite">
+      <section className="mt-5 rounded-lg border border-orange-100 bg-white p-4" aria-live="polite">
         <p className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-gray-800">
           <span>
             <b>{permits.length}</b> permits
@@ -315,7 +317,7 @@ export default function TrackerPage() {
         <button
           type="button"
           onClick={addPermit}
-          className="rounded bg-teal-800 px-4 py-2 text-sm font-medium text-white"
+          className="rounded bg-orange-800 px-4 py-2 text-sm font-medium text-white"
         >
           Add permit
         </button>

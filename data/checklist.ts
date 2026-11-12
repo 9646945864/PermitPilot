@@ -4,7 +4,8 @@
 // Items marked "unverified" are typical plan contents. The county’s Project Submittal Requirements
 // cover file and drawing format only, not what each project type must show. Still need that list.
 
-import type { Location, ProjectType, Status } from "./rules";
+import { DEFAULT_JURISDICTION } from "./rules";
+import type { JurisdictionId, Location, ProjectType, Status } from "./rules";
 
 export type ChecklistGroup = "before" | "application" | "plans";
 
@@ -18,6 +19,8 @@ export const GROUP_ORDER: ChecklistGroup[] = ["before", "application", "plans"];
 
 export interface ChecklistItem {
   id: string;
+  jurisdiction: JurisdictionId;
+  checkedOn: string; // YYYY-MM-DD, the last day this item was checked against its source
   group: ChecklistGroup;
   projects: ProjectType[];
   where: "city" | "any"; // "city" = only inside Charlotte city limits
@@ -41,6 +44,8 @@ const ALL3: ProjectType[] = ["deck", "addition", "garage"];
 export const CHECKLIST: ChecklistItem[] = [
   {
     id: "B1",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "before",
     projects: ALL3,
     where: "any",
@@ -54,6 +59,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "B2",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "before",
     projects: ALL3,
     where: "any",
@@ -67,6 +74,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "B3",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "before",
     projects: ALL3,
     where: "any",
@@ -80,6 +89,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "A1",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "application",
     projects: ALL3,
     where: "any",
@@ -93,6 +104,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "A2",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "application",
     projects: ALL3,
     where: "any",
@@ -106,6 +119,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "A3",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "application",
     projects: ALL3,
     where: "any",
@@ -119,6 +134,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "A5",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "application",
     projects: ALL3,
     where: "any",
@@ -132,6 +149,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "A6",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "application",
     projects: ["addition", "garage"],
     where: "any",
@@ -145,6 +164,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "A4",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "application",
     projects: ALL3,
     where: "city",
@@ -158,6 +179,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "P1",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "plans",
     projects: ALL3,
     where: "any",
@@ -171,6 +194,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "P2",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "plans",
     projects: ALL3,
     where: "any",
@@ -184,6 +209,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "P3",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "plans",
     projects: ALL3,
     where: "any",
@@ -197,6 +224,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "P4",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "plans",
     projects: ALL3,
     where: "any",
@@ -210,6 +239,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "P5",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "plans",
     projects: ["deck"],
     where: "any",
@@ -223,6 +254,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "P6",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "plans",
     projects: ["addition", "garage"],
     where: "any",
@@ -236,6 +269,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "P7",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "plans",
     projects: ["addition", "garage"],
     where: "any",
@@ -249,6 +284,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "P8",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "plans",
     projects: ["addition"],
     where: "any",
@@ -262,6 +299,8 @@ export const CHECKLIST: ChecklistItem[] = [
   },
   {
     id: "P9",
+    jurisdiction: "mecklenburg",
+    checkedOn: "2026-11-12",
     group: "plans",
     projects: ALL3,
     where: "any",
@@ -275,8 +314,15 @@ export const CHECKLIST: ChecklistItem[] = [
   },
 ];
 
-export function itemsFor(project: ProjectType, location: Location): ChecklistItem[] {
+export function itemsFor(
+  project: ProjectType,
+  location: Location,
+  jurisdiction: JurisdictionId = DEFAULT_JURISDICTION
+): ChecklistItem[] {
   return CHECKLIST.filter(
-    (item) => item.projects.includes(project) && (item.where === "any" || location === "city")
+    (item) =>
+      item.jurisdiction === jurisdiction &&
+      item.projects.includes(project) &&
+      (item.where === "any" || location === "city")
   );
 }

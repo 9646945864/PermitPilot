@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import ToolHeader from "../components/ToolHeader";
+import { NotCovered, PlaceSelector, ReportLink, isCovered, usePlace } from "../components/PlaceSelector";
 import {
   PROJECT_LABELS,
   STATUS_LABELS,
@@ -46,6 +47,9 @@ function RuleCard({ rule }: { rule: Rule }) {
           {rule.sourceLabel}
         </a>
       </p>
+      <p className="mt-1 text-xs text-gray-500">
+        Checked {rule.checkedOn} · <ReportLink id={rule.id} />
+      </p>
     </li>
   );
 }
@@ -53,6 +57,8 @@ function RuleCard({ rule }: { rule: Rule }) {
 export default function PlannerPage() {
   const [project, setProject] = useState<ProjectType>("deck");
   const [location, setLocation] = useState<Location>("city");
+  const [place, setPlace] = usePlace();
+  const covered = isCovered(place);
 
   const rules = rulesFor(project, location);
   const steps = rules.filter((r) => r.kind === "step");
@@ -64,7 +70,7 @@ export default function PlannerPage() {
       <ToolHeader />
       <h1 className="tool-title text-3xl text-[#211b18]">Permivo route planner</h1>
       <p className="mt-1 text-gray-600">
-        See which reviews may apply to a small residential project in Mecklenburg County.
+        See which reviews may apply to a small residential project. Rules are available for Mecklenburg County only.
       </p>
 
       <div
@@ -76,6 +82,9 @@ export default function PlannerPage() {
         legal advice.
       </div>
 
+      <PlaceSelector place={place} onChange={setPlace} />
+      {!covered && <NotCovered place={place} />}
+      {covered && (<>
       <section className="mt-6" aria-labelledby="project-heading">
         <h2 id="project-heading" className="text-sm font-medium text-gray-700">
           Project type
@@ -153,6 +162,7 @@ export default function PlannerPage() {
           </ul>
         </section>
       )}
+      </>)}
     </main>
   );
 }

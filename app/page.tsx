@@ -4,9 +4,9 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./globals.css";
 import { PROJECT_LABELS, RULES, STATUS_LABELS } from "../data/rules";
+import { FEEDBACK_URL } from "../data/site";
 
-// Paste your Google Form link here. Until then the button shows "Feedback form coming soon".
-const FEEDBACK_URL = "";
+// The feedback link lives in data/site.ts. Until it is set the button shows "Feedback form coming soon".
 
 type Scene = { num: string; label: string; kicker: string; title: string; accent: string; body: string; note: string };
 
@@ -252,7 +252,7 @@ export default function Home() {
       <footer>
         <Link href="/" className="brand"><Mark /><span>permivo</span></Link>
         <span>Early prototype · Not legal advice</span>
-        <span><Link href="/planner">Planner</Link><Link href="/tracker">Tracker</Link><Link href="/checklist">Checklist</Link></span>
+        <span><Link href="/planner">Planner</Link><Link href="/tracker">Tracker</Link><Link href="/checklist">Checklist</Link><Link href="/rules">Rules</Link><Link href="/about">About</Link><Link href="/disclaimer">Disclaimer</Link></span>
       </footer>
     </main>
   );
